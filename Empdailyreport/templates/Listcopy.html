@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title> ListPost </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+     
+        body{
+          line-height: 2.42857143;
+        }
+        .mainbody{
+            margin-top: 0px;
+            margin-left: 20px;
+            margin-right: 20px;
+            padding:55px;
+            /*border-style: outset;
+            border:5px solid lightgrey;*/
+        }
+        .row{
+          /*border: 1px solid lightgrey;*/*/
+          height:50px;
+        }
+    </style>
+  </head>
+  <body style="background-color: lightgrey; font-size: 14px" >
+    <div style="padding-top: 100px"></div>
+    <div class="container" style="background-color: white; border-radius: 8px ">
+      <h4 align="centre"><b>Employee Name</b></h4>
+      <br>
+    <div class="mainbody" style="padding-top: 55px">
+
+        <div class="row">
+          <table class="table table-striped" id="myTable">
+              <thead >
+                  <tr>
+                      <th>S.No</th>
+                      <th>Date</th>
+                      <th>Login Time</th>
+                      <th>Logout Time</th>
+                      <th>Button</th>
+                  </tr>
+              </thead>
+          </table>
+        </div>
+        <div class ="row">
+          {% for i in data %}
+          <table class="table table-striped" id="myTable">
+                  <tr>
+                      <td>1</td>
+                      <td>{{i.date}}</td>
+                      <td>{{i.loginTime}}</td>
+                      <td>{{i.logoutTime}}</td>
+                      <td><a href="/reportform"><button type="button" class="btn btn-primary btn-sm">Work Report</button></a> </td>
+                  </tr>
+          </table>
+          {% endfor %}
+
+        </div>
+    </div>
+<div class="pagination">
+    <span class="step-links">
+        {% if employeeObj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ employeeObj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ employeeObj.employeeId }} of {{ employeeObj.paginator.num_pages }}.
+        </span>
+
+        {% if employeeObj.has_next %}
+            <a href="?page={{ employeeObj.next_page_number }}">next</a>
+            <a href="?page={{ employeeObj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+</body>
+
+
+</html>
+
+            

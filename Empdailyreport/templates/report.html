@@ -1,0 +1,56 @@
+{% load static %}
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			console.log("hii")
+			textNo = 0;
+			$('#projectid').on('change',function() {
+  				var projects = ($(this).val());
+
+  				console.log($(this).val());
+  				console.log('projects',projects)
+  				console.log('projects',jQuery.type(projects))
+  				var i;
+				for (i = 0; i < projects.length; i++) {
+					console.log('prject[]',projects[i])
+					}
+  				createtextfield(projects)
+
+		});
+			function createtextfield(projects){
+				console.log("we r in text")
+				data =projects.length
+				if (textNo < data) {
+					var dif = data-textNo;
+				for (i = 0; i < dif; i++) {
+				var label = '<label>'+projects[textNo]+'</label> <br>'
+				var texta='<textarea name="project_description" rows="4" cols="50"> </textarea> <br><br>'
+				textNo = textNo +1;
+				$('.textreport').append(label);	
+				$('.textreport').append(texta);			
+				}
+			}
+				}
+		});	
+
+	</script>
+
+	</head>
+	<body>
+		<form method = "post" action="">
+			<select multiple id="projectid" name="projectname">
+			  <option value="">Select</option>
+                {% for option in projectlist %}
+                <option value="{{ option.projectName }}">{{ option.projectName }}</option>
+                {% endfor %}
+			</select>
+			<div class="textreport">
+				<!-- IN THIS DIV DYNAMICALLY  CREATED TEXTAREA IS APPENDED  -->
+			</div>
+			<input type="submit" value="Submit">
+
+		</form>
+	</body>
+</html>
