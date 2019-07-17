@@ -16,8 +16,8 @@
         }
         .mainbody{
             margin-top: 0px;
-            margin-left: 20px;
-            margin-right: 20px;
+            margin-left: 25px;
+            margin-right: 25px;
             padding:55px;
             /*border-style: outset;
             border:5px solid lightgrey;*/
@@ -25,43 +25,50 @@
         .row{
           /*border: 1px solid lightgrey;*/*/
           height:50px;
+          padding-left: 10px;
         }
     </style>
   </head>
   <body style="background-color: lightgrey; font-size: 14px" >
     <div style="padding-top: 100px"></div>
     <div class="container" style="background-color: white; border-radius: 8px ">
-      <h4 align="centre"><b>Employee Name</b></h4>
+        <div class = "action">
+        </div>
+      <h4 style ="align:centre;"><b> {{name}}</b></h4>
       <br>
     <div class="mainbody" style="padding-top: 55px">
 
-        <div class="row">
+        
           <table class="table table-striped" id="myTable">
-              <thead >
+            <div class="row">
+              <thead style="width:50px;">
                   <tr>
                       <th>S.No</th>
                       <th>Date</th>
                       <th>Login Time</th>
                       <th>Logout Time</th>
                       <th>Button</th>
+                      <th>Status</th>
                   </tr>
               </thead>
-          </table>
         </div>
+        {% for i in data %}
         <div class ="row">
-          {% for i in data %}
-          <table class="table table-striped" id="myTable">
-                  <tr>
+          
+                  <tr style="padding-left:50px;">
                       <td>1</td>
                       <td>{{i.date}}</td>
                       <td>{{i.loginTime}}</td>
                       <td>{{i.logoutTime}}</td>
                       <td><a href="/reportform"><button type="button" class="btn btn-primary btn-sm">Work Report</button></a> </td>
+                      <td>Pending</td>
                   </tr>
-          </table>
-          {% endfor %}
+          
+          
 
         </div>
+        {% endfor %}
+        </table>
     </div>
 <div class="pagination">
     <span class="step-links">

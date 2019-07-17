@@ -1,7 +1,15 @@
 {% load static %}
+<!DOCTYPE html>
+
 <html>
-<head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+  <head>
+    <title> ListPost </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 	<script>
 		$(document).ready(function(){
 			console.log("hii")
@@ -25,8 +33,8 @@
 				if (textNo < data) {
 					var dif = data-textNo;
 				for (i = 0; i < dif; i++) {
-				var label = '<label>'+projects[textNo]+'</label> <br>'
-				var texta='<textarea name="project_description" rows="4" cols="50"> </textarea> <br><br>'
+				var label = '<label>'+projects[textNo]+'</label> '
+				var texta='<textarea class="form-control" name="project_description" rows="4" cols="50"> </textarea> <br><br>'
 				textNo = textNo +1;
 				$('.textreport').append(label);	
 				$('.textreport').append(texta);			
@@ -37,20 +45,72 @@
 
 	</script>
 
-	</head>
-	<body>
-		<form method = "post" action="">
-			<select multiple id="projectid" name="projectname">
-			  <option value="">Select</option>
-                {% for option in projectlist %}
-                <option value="{{ option.projectName }}">{{ option.projectName }}</option>
-                {% endfor %}
-			</select>
-			<div class="textreport">
-				<!-- IN THIS DIV DYNAMICALLY  CREATED TEXTAREA IS APPENDED  -->
-			</div>
-			<input type="submit" value="Submit">
+	
+	
 
-		</form>
+    <style type="text/css">
+     
+        body{
+          line-height: 2.42857143;
+        }
+        .mainbody{
+            margin-top: 0px;
+            margin-left: 20px;
+            margin-right: 20px;
+            padding:55px;
+            /*border-style: outset;
+            border:5px solid lightgrey;*/
+        }
+        .row{
+          /*border: 1px solid lightgrey;*/*/
+          height:50px;
+        }
+        select.form-control{display:inline-block}
+        .form-control{width:200px;
+
+        }
+        select[multiple], select[size]{
+        	height:70px;
+        }
+       
+    </style>
+  </head>
+  <body style="background-color: lightgrey; font-size: 14px" >
+    <div style="padding-top: 100px"></div>
+    <div class="container" style="background-color: white; border-radius: 8px ">
+      <h4 style="text-align:center;"><b>Employee Name</b></h4>
+      <br>
+	    <div class="mainbody" style="padding-top: 55px">
+			<form method = "post" action="">
+				<table style="width:40%">
+				<tr>
+					<td style="width:100px;"><label style = " font-size: 20px;">Projects:</label></td>
+					<td>
+						<select multiple id="projectid" class="form-control" name="projectname">
+						  <!-- <option value="">Select</option> -->
+		                  {% for option in projectlist %}
+		                  <option value="{{ option.projectName }}">{{ option.projectName }}</option>
+		                  {% endfor %}
+						</select>
+					</td>
+				</tr>
+				<tr class="textreport" >
+					<!-- <td class=labelreport style="text-align: center;" >
+					</td>
+						<div >
+							IN THIS DIV DYNAMICALLY  CREATED TEXTAREA IS APPENDED 
+						</div>
+					<td  class="textreport">
+					</td> -->
+				</tr>
+					<!-- <input type="submit" value="Submit"> -->
+				<tr>
+						<td><a href=""><button type="submit" class="btn btn-primary btn-sm " value ="Submit">Submit</button></a> </td>
+				</tr>
+			</table>
+			</form>
+		</div>
+	</div>
+		
 	</body>
 </html>

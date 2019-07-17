@@ -6,5 +6,6 @@ urlpatterns = [
     path('logout',views.logoutFun),
     path('reportist',views.reportList),
     path('reportform', views.reportform),
+    path('',views.home),
    
 ]
