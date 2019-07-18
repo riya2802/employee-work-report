@@ -7,5 +7,6 @@ urlpatterns = [
     path('reportist',views.reportList),
     path('reportform', views.reportform),
     path('',views.home),
+    path('list',views.list),
    
 ]

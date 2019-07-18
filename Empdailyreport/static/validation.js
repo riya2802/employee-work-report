@@ -23,17 +23,14 @@ $(document).ready(function(){
 		            $('.action').addClass('alert-success');
 		            $('.action').removeClass('alert-danger');
 		            $('.action').text(res['msg']);
-		            $('#loginform').attr('onSubmit',true);
-		            console.log($('#loginform').val());
+		            
 		        }else{
-	            	alert('hloo')
 	                console.log('we are in a else condition');
 	                $('.action').show()
 	                $('.action').removeClass('alert-success');
 	                $('.action').addClass('alert-danger');
 	                $('.action').text(res['msg']);
-	                 $('#loginform').attr('onSubmit',true);
-		            console.log($('form').attr('onSubmit'));
+	                 
 		        }						
    
 			}

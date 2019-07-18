@@ -11,7 +11,6 @@ from .validations import is_valid_email
 def loginFun(request):
 	print(request.method)
 	if request.method == "POST":
-
 		email = request.POST.get('email')
 		password = request.POST.get('password')
 		print("password",password)
@@ -32,6 +31,9 @@ def loginFun(request):
 		if not checkReport:
 			reportObj = Report.objects.create(userid=user_obj)
 		return JsonResponse({'msg':'Success', 'status':200}) 
+
+def list(request):
+	return render(request,'list.html')
 
 @csrf_exempt
 def home(request):
@@ -55,9 +57,8 @@ def reportList(request):
 		return redirect('/login')
 	user_obj =User.objects.filter(email=request.user.email).first()
 	obj = Report.objects.filter(userid=user_obj,status="Pending" )
-	for i in obj:
-		print(i)
-	return render(request,'Listcopy.html', {'data':obj,'name':user_obj.username})
+	print(len(obj))
+	return render(request,'list.html', {'data':obj,'name':user_obj.username})
 
 @csrf_exempt
 def reportform(request):
