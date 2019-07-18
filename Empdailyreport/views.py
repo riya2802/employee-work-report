@@ -24,16 +24,16 @@ def loginFun(request):
 			return JsonResponse({'msg':'User not Exist', 'status':400}) 
 		user = authenticate(username=user_obj.username, password=password)
 		if not user:
-			return JsonResponse({'msg':'password Not Match', 'status':400}) 
+			return JsonResponse({'msg':'Password Not Match', 'status':400}) 
 		login(request,user)
 		print('date=',datetime.datetime.now().date())
 		checkReport = Report.objects.filter(userid =user_obj ,date=datetime.datetime.now().date())
+		print('checkReport',checkReport)
 		if not checkReport:
 			reportObj = Report.objects.create(userid=user_obj)
 		return JsonResponse({'msg':'Success', 'status':200}) 
 
-def list(request):
-	return render(request,'list.html')
+
 
 @csrf_exempt
 def home(request):
@@ -44,17 +44,19 @@ def home(request):
 @csrf_exempt
 def logoutFun(request):
 	print(request.user.username)
+	if not request.user.is_authenticated:
+		return redirect('/home')
 	user_obj =User.objects.filter(email=request.user.email).first()
 	obj = Report.objects.filter(userid=user_obj).first()
 	obj.logoutTime = datetime.datetime.now().time()
 	print('obj.logoutTime',obj.logoutTime)
 	obj.save()
 	logout(request)
-	return redirect('/login')
+	return redirect('/home')
 
 def reportList(request):
 	if not request.user.is_authenticated:
-		return redirect('/login')
+		return redirect('/home')
 	user_obj =User.objects.filter(email=request.user.email).first()
 	obj = Report.objects.filter(userid=user_obj,status="Pending" )
 	print(len(obj))
@@ -63,7 +65,7 @@ def reportList(request):
 @csrf_exempt
 def reportform(request):
 	if not request.user.is_authenticated:
-		return redirect('/login')
+		return redirect('/home')
 	if request.method == "GET":
 		projectlist= Projects.objects.all()
 		return render(request, 'report.html', {'projectlist':projectlist})
@@ -74,11 +76,14 @@ def reportform(request):
 	print('project_description',project_description,type(project_description))
 	insert_list=[]
 	for i in range(len(project_description)):
-		if project_description[i] == "" :
+		print("for")
+		if project_description[i] == " " or project_description[i] is None  :
+			print("in")
 			print('project_description[i]',project_description[i])
-			return redirect('/reportform')
+			return JsonResponse({'msg':'empty project Descriprtion is not allowed','status':400})
 		insert_list.append(WorkReport(userid=user_obj,projectName=project_list[i],projectDescription=project_description[i]))
+	print("insert_list",insert_list)
 	WorkReport.objects.bulk_create(insert_list)
 	print('insert_list',insert_list)
 	obj = Report.objects.filter(userid=user_obj,date =datetime.datetime.now().date()).update(status='Success')
-	return redirect('/reportist')
+	return JsonResponse({'msg':'Success','status':200})

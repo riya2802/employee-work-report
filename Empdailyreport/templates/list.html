@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Table V02</title>
+	<title>Report List</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -27,10 +27,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-</style>
 <style>
 
-	.container-table100 {background: #0099FF;}
+	.container-table100 {background: #0099FF;margin-top: 30px; padding-top: 0px; align-items:start;}
 	.row .cell:nth-child(1) { width: 230px;  padding-left: 110px; }
 	.row .cell:nth-child(2) { width: 230px;}
 	.row .cell:nth-child(3) { width: 230px;}
@@ -67,15 +66,21 @@
 	.image {
 	  opacity: 1;
 	  display: block;
-	  
 	  transition: .5s ease;
 	  backface-visibility: hidden;
-	}.middle {
+	}
+	.logoutimage {
+	  opacity: 1;
+	  display: block;
+	  transition: .5s ease;
+	  backface-visibility: hidden;
+	}
+	.middle {
 	  transition: .5s ease;
 	  opacity: 0;
 	  position: absolute;
 	  top: 27px;
-	  left: 86.5%;
+	  left: 90.5%;
 	  transform: translate(-50%, -50%);
 	  -ms-transform: translate(-50%, -50%);
 	  text-align: center;
@@ -90,6 +95,30 @@
 	}
 
 	.text {
+	  background-color: transparent;
+	  color: white;
+	  font-size: 16px;
+	}
+	.logoutmiddle {
+	  transition: .5s ease;
+	  opacity: 0;
+	  position: absolute;
+	  top: 27px;
+	  left: 96.5%;
+	  transform: translate(-50%, -50%);
+	  -ms-transform: translate(-50%, -50%);
+	  text-align: center;
+	}
+
+	.navimage:hover .logoutimage {
+	  opacity: 0.3;
+	}
+
+	.navimage:hover .logoutmiddle {
+	  opacity: 1;
+	}
+
+	.logouttext {
 	  background-color: transparent;
 	  color: white;
 	  font-size: 16px;
@@ -110,9 +139,13 @@
 				  </div>
 			      </span>
 			    </button>
-			    <button class="btn" type="button" >
-			      <span> <img style="border-radius: 50%;" src="{% static 'logout.png' %}" height="25px" width="25px"></span>
-			    </button>
+			    <a href = "/logout"><button class="btn" type="button" >
+			    	<span> <img style="border-radius: 50%;" src="{% static 'logout.png' %}" height="25px" width="25px" class="logoutimage" >
+			      	<div class="logoutmiddle">
+				    <div class="logouttext">Logout</div>
+				  </div>
+			      </span>
+			    </button></a>
 			  </div>
 			  
 		</nav>
