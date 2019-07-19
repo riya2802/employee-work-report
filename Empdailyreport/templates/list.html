@@ -26,7 +26,16 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+  	$(document).ready(function(){
+  		var d = new Date();
+		var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
+		console.log('strDate',strDate)
+		var date = $('.currentdate').text()
+		console.log('date',date)
+  	});
 
+  </script>
 <style>
 
 	.container-table100 {background: #0099FF;margin-top: 30px; padding-top: 0px; align-items:start;}
@@ -171,16 +180,16 @@
 						{% for i in data %}
 						
 							<div class="row">
-								<div class="cell" data-title="Full Name">
+								<div class="cell" data-title="S.No">
 									100
 								</div>
-								<div class="cell" data-title="Age">
+								<div class="cell currentdate" data-title="Date">
 									{{i.date}}
 								</div>
-								<div class="cell" data-title="Job Title">
+								<div class="cell" data-title="LoginTime">
 									{{i.loginTime}}
-
 								</div>
+
 								<div class="cell" data-title="Location">
 									<a href="/reportform"><button type="button" class="btn btn-primary btn-sm">Work Report</button></a>
 								</div>

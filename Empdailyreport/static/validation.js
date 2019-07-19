@@ -36,23 +36,19 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
-	console.log('up')
-	$("#reportsubmitbtn").click(function(e){
+	$(document).on('click', '#reportsubmitbtn', function(e) {
+	console.log("hii")
 	e.preventDefault();
 	console.log("in")
 	console.log("in")
-    
-    var x = $("form").serializeArray();
-    console.log('x',x.val)
-    $.each(x, function(i, field){
-      console.log(field.name + ":" + field.value + " ");
-    });
-		});
+    var projectname= $(".pname").map(function(){return $(this).val();}).get();
+    var project_description  = $(".project_description").map(function(){return $(this).val();}).get();
+    console.log('projectname',projectname)
+    console.log('project_description',project_description)
     $.ajax({
         url : "http://127.0.0.1:8000/reportform",
         type: 'POST',
-        data: data,
+        data: {'projectname':projectname,'project_description':project_description},
         async: false,
     	success:function(response){
 
@@ -60,7 +56,9 @@ $(document).ready(function(){
 	        console.log(res)
         
 	        if(res['status']==200){
-	             location.href=("/home")   
+	        	console.log("Success")
+	        	console.log(res)
+	            location.href=("/logout") 
 	            
 	        }else{
                 console.log('we are in a else condition');
@@ -74,5 +72,4 @@ $(document).ready(function(){
 		}
 	});
 	});
-
-
+    });

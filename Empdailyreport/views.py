@@ -69,20 +69,25 @@ def reportform(request):
 	if request.method == "GET":
 		projectlist= Projects.objects.all()
 		return render(request, 'report.html', {'projectlist':projectlist})
+	
 	user_obj =User.objects.filter(email=request.user.email).first()
-	project_list = request.POST.getlist('projectname')
+	report_obj = Report.objects.filter(userid=user_obj).first()
+	print('report_obj',report_obj,report_obj.date)
+	project_list = request.POST.getlist('projectname[]')
 	print('project_list',project_list,type(project_list))
-	project_description = request.POST.getlist('project_description')
+	project_description = request.POST.getlist('project_description[]')
 	print('project_description',project_description,type(project_description))
 	insert_list=[]
 	for i in range(len(project_description)):
 		print("for")
-		if project_description[i] == " " or project_description[i] is None  :
+		print(len(project_description[i]))
+		if project_description[i] == " " or project_description[i] is None or project_description[i] =="" or len(project_description[i])< 10:
 			print("in")
 			print('project_description[i]',project_description[i])
-			return JsonResponse({'msg':'empty project Descriprtion is not allowed','status':400})
-		insert_list.append(WorkReport(userid=user_obj,projectName=project_list[i],projectDescription=project_description[i]))
+			return JsonResponse({'msg':'Blank project Descriprtion is not allowed','status':400})
+		insert_list.append(WorkReport(userid=user_obj,projectName=project_list[i],projectDescription=project_description[i],reportid=report_obj))
 	print("insert_list",insert_list)
+	date = report_obj.date
 	WorkReport.objects.bulk_create(insert_list)
 	print('insert_list',insert_list)
 	obj = Report.objects.filter(userid=user_obj,date =datetime.datetime.now().date()).update(status='Success')

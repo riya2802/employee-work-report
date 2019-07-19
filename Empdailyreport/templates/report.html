@@ -25,9 +25,10 @@
 <script>
 	$(document).ready(function(){
 		console.log("hii")
+
 		textNo = 0;
-		$('#projectid').on('change',function()
-		{
+		$('.projectid').on('change',function()
+		{		
 				var projects = ($(this).val());
 
 				console.log($(this).val());
@@ -49,19 +50,30 @@
 				var dif = data-textNo;
 				for (i = 0; i < dif; i++) 
 				{
-				var label = '<label>'+projects[textNo]+'</label> '
-				var texta='<textarea class="form-control" name="project_description" rows="4" cols=4> </textarea> <br><br>'
+				// var label = '<label>'+projects[textNo]+'</label> '
+				console.log(i);
+				var input='<div class="cancel'+textNo+'"><div  class="form-control" style=" background-color:#191970; border:1px solid white; color:white; "><p class="selected_project" >'+projects[textNo]+'</p></div><input type="text" value=" '+projects[textNo]+'" hidden class="pname" name = "selected_project[]" ></input><textarea class="form-control project_description " style="width:400px;" name="project_description[]" rows="10" cols="60"> </textarea><a class="description_cancel" key="cancel'+textNo+'">Cancel</a></div>';
 				textNo = textNo +1;
-				$('.textreport').append(label);	
-				$('.textreport').append(texta);			
+				$('.textreport').append(input);	
 				}
 			}
+			
 		}
-	});	
+		
+	});
+	$(document).on('click', '.description_cancel', function() {
+		var key = $(this).attr('key');
+		console.log('key',key)
+		var p= $('.selected_project').text();
+		
+		$('.'+key).remove();
+		
+	});
+	
 
 </script>
 <style>
-     
+     .description_cancel{ color: #fff !important; cursor: pointer;}
     body{
       line-height: 2.42857143;
     }
@@ -77,7 +89,7 @@
         border:5px solid lightgrey;*/
     }
     .dynamic{
-    	margin-left: 110px;
+    	margin-left: 60px;
         margin-right: 20px;
         margin-bottom: 20px;
         padding:55px;
@@ -88,7 +100,7 @@
       height:50px;
     }
     select.form-control{display:inline-block}
-    .form-control{width:200px;
+    /*.form-control{width:200px;*/
 
     }
     select[multiple], select[size]{
@@ -193,7 +205,8 @@
 
 	}
 	  /*padding: 16px 32px;*/
-	}
+	.action{display: none;}
+    .action1{display: none;}
 </style>
 </head>
   <body >
@@ -218,6 +231,7 @@
 			  </div>
 			  
 		</nav>
+
 		<div class="container-table100" style="width:80">
 			
 			<div class="wrap-table100" style="width:50%">
@@ -226,14 +240,15 @@
 				    <div class="container"  >
 				      <h4 style="text-align:center; color: white;"><b>Employee Name</b></h4>
 				      <br>
-							<form method = "post" action="">
+							<form method = "post">
 								
-									<div class="mainbody" style="padding-top: 55px;  background-color : white" >
+									<div class="mainbody" style="padding-top: 5px;  background-color : white" >
+										<p style="margin-left:;">press Ctrl to select multiple project.</p>
 										<table style="width:40%">
 											<tr>
 												<td style="width:120px;"><label style = " font-size: 20px;">Projects:</label></td>
 												<td>
-													<select multiple id="projectid" class="form-control" name="projectname">
+													<select multiple class="projectid" class="form-control" name="projectname" style="width:200px;">
 													  <!-- <option value="">Select</option> -->
 									                  {% for option in projectlist %}
 									                  <option value="{{ option.projectName }}">{{ option.projectName }}</option>
@@ -257,8 +272,9 @@
 										</tr></table>
 										</div>
 									<!-- <input type="submit" value="Submit"> -->
+									<div class="alert action  action1" style=" text-align: center"></div>
 								<tr>
-										<td><a href=""><button type="submit" id="reportsubmitbtn" class="btn btn-primary btn-sm " value ="Submit">Submit</button></a> </td>
+										<td><a><button type="submit" id="reportsubmitbtn" class="btn btn-primary btn-sm " value ="Submit">Submit</button></a> </td>
 								</tr>
 								</table>
 							</form>
