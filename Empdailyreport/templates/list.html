@@ -28,13 +28,42 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script>
   	$(document).ready(function(){
-  		var d = new Date();
-		var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
-		console.log('strDate',strDate)
-		var date = $('.currentdate').text()
-		console.log('date',date)
-  	});
+  		$('.workreport').click(function(e){
+  			e.preventDefault();
+  			var d = new Date();
+  // 		const month = d.toLocaleString('default', { month: 'long' });
+		// console.log(month);
+		// var strDate = month+" "+d.getDate()+", "+d.getFullYear();
+		// console.log('strDate',strDate)
+			var date=$(".currentdate").map(function(){return $(this).val();}).get();
+		//var date = $('.currentdate').text()
+			// for(var i=0; i<date.length;i++){
+			// 	console.log(date[i])
+			// 	 datekey= new Date(date[i])
+			// 	 const month = datekey.toLocaleString('default', { month: 'long' });
+			// 	 var strDate = month+" "+datekey.getDate()+", "+datekey.getFullYear();
+			// 	 $('.workreport').attr('key',date[i])
+			// }
+			for(var j=0; j<date.length;j++){
+				var mydate = new Date(date[j])
+			    const month = mydate.toLocaleString('default', { month: 'long' })
+				var mydd=mydate.getDate();
+				var mymm=month;
+				var myyy=mydate.getFullYear();
+				console.log('full date',mydd,mymm,myyy)
+				if(mydate==d){
+					var keyvalue= $('.workreport').attr('key');
+					console.log('key',keyvalue)
+				}
+				else{
+					console.log("True")
+					var keyvalue= $('.workreport').attr('key');
+					console.log('key',keyvalue)
+				}
+			}
 
+  	});
+  	});
   </script>
 <style>
 
@@ -183,7 +212,8 @@
 								<div class="cell" data-title="S.No">
 									100
 								</div>
-								<div class="cell currentdate" data-title="Date">
+								<div class="cell " data-title="Date">
+									<input type="text" value="{{i.date}}" hidden class="currentdate" name = "reportdate[]" ></input>
 									{{i.date}}
 								</div>
 								<div class="cell" data-title="LoginTime">
@@ -191,7 +221,7 @@
 								</div>
 
 								<div class="cell" data-title="Location">
-									<a href="/reportform"><button type="button" class="btn btn-primary btn-sm">Work Report</button></a>
+									<a href="/reportform"><button type="button" class="btn btn-primary btn-sm workreport" key ="">Work Report</button></a>
 								</div>
 								
 
