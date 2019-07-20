@@ -13,3 +13,47 @@
 }
 
 ## heding width is also same 
+
+
+-------------------------------------------------------
+
+  // 		const month = d.toLocaleString('default', { month: 'long' });
+		// console.log(month);
+		// var strDate = month+" "+d.getDate()+", "+d.getFullYear();
+		// console.log('strDate',strDate)
+			var date=$(".currentdate").map(function(){return $(this).val();}).get();
+		//var date = $('.currentdate').text()
+			for(var i=0; i<date.length;i++){
+				console.log(date[i])
+				 datekey= new Date(date[i])
+				 const month = datekey.toLocaleString('default', { month: 'long' });
+				 var strDate = month+" "+datekey.getDate()+", "+datekey.getFullYear();
+				 $('.workreport').attr('key',date[i])
+			}
+			for(var j=0; j<date.length;j++){
+				var mydate = new Date(date[j])
+			    const month = mydate.toLocaleString('default', { month: 'long' })
+				var mydd=mydate.getDate();
+				var mymm=month;
+				var myyy=mydate.getFullYear();
+				console.log('full date',mydd,mymm,myyy)
+				if(mydate==d){
+					var keyvalue= $('.workreport').attr('key');
+					console.log('key',keyvalue)
+				}
+				else{
+					console.log("True")
+					var keyvalue= $('.workreport').attr('key');
+					console.log('key',keyvalue)
+				}
+			}
+
+
+--------------------------------------------------------------------
+var date=$(".currentdate").map(function(){return $(this).val();}).get();
+
+  			console.log('fielddate',date)
+  			var row_index = $(this).closest("tr").index();
+         	console.log(row_index,'this is ')
+         	var date1 = document.getElementById("datefield").text();
+         // $("#myTable").deleteRow(row_index);

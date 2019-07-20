@@ -7,7 +7,7 @@ reportStatus=(('Success','Success'),('Pending','Pending'))
 class Report(models.Model):
 	userid = models.ForeignKey(User,models.CASCADE)
 	date = models.DateField(auto_now=True)
-	loginTime = models.TimeField(auto_now=True)
+	loginTime = models.TimeField(auto_now_add=True)
 	logoutTime = models.TimeField(blank=True, null=True, default=datetime.time(0,0))
 	status=models.CharField(max_length=30, choices=reportStatus, default="Pending" )
 

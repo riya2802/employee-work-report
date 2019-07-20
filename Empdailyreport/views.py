@@ -30,7 +30,7 @@ def loginFun(request):
 		checkReport = Report.objects.filter(userid =user_obj ,date=datetime.datetime.now().date())
 		print('checkReport',checkReport)
 		if not checkReport:
-			reportObj = Report.objects.create(userid=user_obj)
+			reportObj = Report.objects.create(userid=user_obj,date=datetime.datetime.now().date())
 		return JsonResponse({'msg':'Success', 'status':200}) 
 
 
@@ -49,7 +49,6 @@ def logoutFun(request):
 	user_obj =User.objects.filter(email=request.user.email).first()
 	obj = Report.objects.filter(userid=user_obj).first()
 	obj.logoutTime = datetime.datetime.now().time()
-	print('obj.logoutTime',obj.logoutTime)
 	obj.save()
 	logout(request)
 	return redirect('/home')
@@ -57,10 +56,21 @@ def logoutFun(request):
 def reportList(request):
 	if not request.user.is_authenticated:
 		return redirect('/home')
-	user_obj =User.objects.filter(email=request.user.email).first()
-	obj = Report.objects.filter(userid=user_obj,status="Pending" )
-	print(len(obj))
-	return render(request,'list.html', {'data':obj,'name':user_obj.username})
+	if request.method =="GET":
+		user_obj =User.objects.filter(email=request.user.email).first()
+		obj = Report.objects.filter(userid=user_obj,status="Pending" ).order_by('-date')
+		print(len(obj))
+		todaydate = datetime.datetime.now().date()
+		return render(request,'list.html', {'data':obj,'name':user_obj.username,'todaydate':todaydate})
+	date = request.POST.get('date')
+	tdate = datetime.datetime.now().date()
+	if date < tdate or date >tdate :
+		return JsonResponse({'msg':'Date is less then today date','status':400})
+	return JsonResponse({'msg':'Success','status':200})
+
+
+
+
 
 @csrf_exempt
 def reportform(request):
@@ -68,7 +78,8 @@ def reportform(request):
 		return redirect('/home')
 	if request.method == "GET":
 		projectlist= Projects.objects.all()
-		return render(request, 'report.html', {'projectlist':projectlist})
+
+		return render(request, 'report.html', {'projectlist':projectlist,})
 	
 	user_obj =User.objects.filter(email=request.user.email).first()
 	report_obj = Report.objects.filter(userid=user_obj).first()

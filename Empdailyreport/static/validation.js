@@ -27,6 +27,7 @@ $(document).ready(function(){
 		        }else{
 	                console.log('we are in a else condition');
 	                $('.action').show()
+	                $('.action').show().delay(2000).fadeOut();
 	                $('.action').removeClass('alert-success');
 	                $('.action').addClass('alert-danger');
 	                $('.action').text(res['msg']);
@@ -63,6 +64,7 @@ $(document).ready(function(){
 	        }else{
                 console.log('we are in a else condition');
                 $('.action').show()
+                $('.action').show().delay(2000).fadeOut();
                 $('.action').removeClass('alert-success');
                 $('.action').addClass('alert-danger');
                 $('.action').text(res['msg']);
