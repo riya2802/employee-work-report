@@ -21,7 +21,7 @@ def loginFun(request):
 			return JsonResponse({'msg':'Enter valid Email !', 'status':400})
 		user_obj =User.objects.filter(email=email).first()
 		if user_obj is None:
-			return JsonResponse({'msg':'User not Exist', 'status':400}) 
+			return JsonResponse({'msg':'User does not Exist', 'status':400}) 
 		user = authenticate(username=user_obj.username, password=password)
 		if not user:
 			return JsonResponse({'msg':'Password Not Match', 'status':400}) 
@@ -37,7 +37,7 @@ def loginFun(request):
 
 @csrf_exempt
 def home(request):
-	return render(request,'login.html')
+	return render(request,'myform.html')
 	
 
 
@@ -61,7 +61,7 @@ def reportList(request):
 		obj = Report.objects.filter(userid=user_obj,status="Pending" ).order_by('-date')
 		print(len(obj))
 		todaydate = datetime.datetime.now().date()
-		return render(request,'list.html', {'data':obj,'name':user_obj.username,'todaydate':todaydate})
+		return render(request,'pricing-table-1.html', {'data':obj,'name':user_obj.username,'todaydate':todaydate})
 	date = request.POST.get('date')
 	tdate = datetime.datetime.now().date()
 	if date < tdate or date >tdate :

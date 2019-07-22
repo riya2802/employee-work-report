@@ -88,13 +88,28 @@ var SnippetLogin = function() {
             btn.addClass('m-loader m-loader--right m-loader--light').attr('disabled', true);
 
             form.ajaxSubmit({
-                url: '',
-                success: function(response, status, xhr, $form) {
-                	// similate 2s delay
-                	setTimeout(function() {
-	                    btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
-	                    showErrorMsg(form, 'danger', 'Incorrect username or password. Please try again.');
-                    }, 2000);
+                url : "http://127.0.0.1:8000/login",
+                type: 'POST',
+                data: {'email': $('#email').val(),'password':$('#password').val()},
+                async: false,
+                success:function(response)
+                {
+                    res=JSON.parse(JSON.stringify(response))
+                    
+                    if(res['status']==200){
+                        setTimeout(function() {
+                            btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
+                            showErrorMsg(form, 'success', res['msg']);
+                        }, 2000);
+                        location.href=("/reportlist")
+                    }
+                    else{
+                        
+                    	setTimeout(function() {
+                            btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
+                            showErrorMsg(form, 'danger', res['msg']);
+                        }, 2000);
+                    }
                 }
             });
         });

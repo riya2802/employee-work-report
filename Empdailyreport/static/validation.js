@@ -1,6 +1,8 @@
 console.log("hii")
 $(document).ready(function(){
+	console.log("hii")
 	$('#loginbtn').click(function(e){
+		console.log("hii")
 		e.preventDefault();
 		console.log("we are in the job details function");
 	    console.log("this is the data");
