@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filter %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,29 +29,29 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script>
   	//var thisDay = new Date().getDate();
-    function checkButton()
-	    {
-	    	console.log("pt")
-	    	var dt = new Date();
-			var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-			timeStart="17:45";
-			timeEnd="17:59";
-			var start = new Date(dt + " " + timeStart);
-			var end = new Date(dt + " " + timeEnd);
-			console.log(start, end)
-	        if (time >=17 && time<=18){ 
-	        	//|| (time >=18  && time <=19))     
+  //   function checkButton()
+	 //    {
+	 //    	console.log("pt")
+	 //    	var dt = new Date();
+		// 	var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+		// 	timeStart="17:45";
+		// 	timeEnd="17:59";
+		// 	var start = new Date(dt + " " + timeStart);
+		// 	var end = new Date(dt + " " + timeEnd);
+		// 	console.log(start, end)
+	 //        if (time >=17 && time<=18){ 
+	 //        	//|| (time >=18  && time <=19))     
 	        	
-	         		console.log("date",'a')
-	        	}
-	        else{
-					printAlert();
-				}
-	    }
+	 //         		console.log("date",'a')
+	 //        	}
+	 //        else{
+		// 			printAlert();
+		// 		}
+	 //    }
 
-    function printAlert() {
-		window.alert('We are not accepting entries right now.');
-    }
+  //   function printAlert() {
+		// window.alert('We are not accepting entries right now.');
+  //   }
 
   </script>
 <style>
@@ -213,7 +214,12 @@
 									{% if i.date < todaydate  %}
 									<button disabled type="button" class="btn btn-primary btn-sm workreport" key ="">Work Report</button>
 									{% else %}
+											{% get_nowtime as currenttime %}
+											{% if currenttime == "True"   %}
 									<a href="/reportform"><button type="button"  class="btn btn-primary btn-sm workreport" key ="">Work Report</button></a>
+									{% else %}
+									<button  type="button" class="btn btn-primary btn-sm workreport" key ="">Work Report</button>
+									{% endif %}
 									{% endif %}
 								</div>
 								
