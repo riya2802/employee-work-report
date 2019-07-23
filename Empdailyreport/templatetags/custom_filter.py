@@ -17,3 +17,8 @@ def get_nowtime():
 		res ="False"
 	return res
 
+@register.simple_tag
+def get_counting():
+	val=0
+	return val
+

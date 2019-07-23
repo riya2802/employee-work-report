@@ -40,14 +40,18 @@ $(document).ready(function(){
 		});
 	});
 	$(document).on('click', '#reportsubmitbtn', function(e) {
-	console.log("hii")
+	
 	e.preventDefault();
-	console.log("in")
-	console.log("in")
+	
     var projectname= $(".pname").map(function(){return $(this).val();}).get();
     var project_description  = $(".project_description").map(function(){return $(this).val();}).get();
-    console.log('projectname',projectname)
-    console.log('project_description',project_description)
+        for(var i=0;i<project_description.length;i++){
+    	console.log("lenh",project_description[i].length)
+    	if(project_description[i].length <= 5){
+    		console.log("inbtn")
+    		$(".ml-lg-auto").before('<div class="red" style="color:red" >Empty '+project_description[i]  +' Descriprtin. </div>')
+    	}
+    }
     $.ajax({
         url : "http://127.0.0.1:8000/reportform",
         type: 'POST',
