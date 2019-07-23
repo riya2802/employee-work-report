@@ -6,6 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 import datetime
 from .models import Report, Projects, WorkReport
 from .validations import is_valid_email
+from django.core.paginator import Paginator
+from django.shortcuts import render
+
 
 @csrf_exempt
 def loginFun(request):
@@ -37,7 +40,7 @@ def loginFun(request):
 
 @csrf_exempt
 def home(request):
-	return render(request,'myform.html')
+	return render(request,'login.html')
 	
 
 
@@ -56,17 +59,14 @@ def logoutFun(request):
 def reportList(request):
 	if not request.user.is_authenticated:
 		return redirect('/home')
-	if request.method =="GET":
-		user_obj =User.objects.filter(email=request.user.email).first()
-		obj = Report.objects.filter(userid=user_obj,status="Pending" ).order_by('-date')
-		print(len(obj))
-		todaydate = datetime.datetime.now().date()
-		return render(request,'pricing-table-1.html', {'data':obj,'name':user_obj.username,'todaydate':todaydate})
-	date = request.POST.get('date')
-	tdate = datetime.datetime.now().date()
-	if date < tdate or date >tdate :
-		return JsonResponse({'msg':'Date is less then today date','status':400})
-	return JsonResponse({'msg':'Success','status':200})
+	user_obj =User.objects.filter(email=request.user.email).first()
+	obj = Report.objects.filter(userid=user_obj,status="Pending" ).order_by('-date')
+	print(len(obj))
+	todaydate = datetime.datetime.now().date()
+	paginator = Paginator(obj,5) # Show 25 contacts per page
+	page = request.GET.get('page')
+	data_page = paginator.get_page(page)
+	return render(request,'reportlist.html', {'data':data_page,'name':user_obj.username,'email':user_obj.email,'todaydate':todaydate})
 
 
 
