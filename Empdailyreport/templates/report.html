@@ -35,19 +35,14 @@
 		    }
 		  });
 		 $(document).ready(function(){
-		 	console.log("in")
-		 	// if($('.projectselect').val().length==0){
-		 	// $('#reportsubmitbtn').attr("disabled",true);
-		 	// // jQuery("#reportsubmitbtn").prop("disabled", true);
-		 	// }
-		 	$('.projectselect').change( function(){
-		 		if($('.projectselect').val().length==0){
-			 	$('#reportsubmitbtn').attr("disabled",true);
-			 	// jQuery("#reportsubmitbtn").prop("disabled", true);
-			 	}
-			 	else{$('#reportsubmitbtn').attr("disabled",false);}
-		 	});
-			$('.projectselect').on('select2:select', function (e) {
+		 	
+		 	$('#reportsubmitbtn').click(function(e){
+		 		e.preventDefault();});
+		 	if($('.projectselect').val().length==0){
+		 		$('#reportsubmitbtn').attr("disabled",true);
+		 	}
+		 	$('.projectselect').on('select2:select', function (e) {
+						$('#reportsubmitbtn').attr("disabled",false);
 			            var optionValue = $(this).val();
 			            var optionText = $(this).text();
 			            var data = e.params.data;
@@ -59,6 +54,9 @@
 			});
 			 	
 			$('.projectselect').on(' select2:unselect', function (e) {
+						if($('.projectselect').val().length==0){
+							$('#reportsubmitbtn').attr("disabled",true);
+			 			}
 			            var optionValue = $(this).val();
 			            var optionText = $(this).text();
 			            var data = e.params.data;
@@ -69,7 +67,7 @@
 			            deleterows(lastSelectedItem)
 			});
 		});
-
+	
 			function displayrows(lastSelectedItem){
 			//console.log('length',projects.length)
 
@@ -191,6 +189,21 @@
 					<div class="m-stack m-stack--ver m-stack--desktop">
 						
 						<div class="m-stack__item m-stack__item--fluid m-header-head" style="background-color: #282a3c;" id="m_header_nav">
+							<div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark "  >
+								<ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
+									<li class="m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" data-redirect="true" aria-haspopup="true">
+										<img src = "{% static 'logo.png'%}" width=40%>
+										<!-- <a  href="#" class="m-menu__link m-menu__toggle">
+											<i class="m-menu__link-icon flaticon-add"></i>
+											<span class="m-menu__link-text">
+												Actions
+											</span>
+											<i class="m-menu__hor-arrow la la-angle-down"></i>
+											<i class="m-menu__ver-arrow la la-angle-right"></i> -->
+										</a>
+									</li>
+								</ul>	
+							</div>
 							
 							<button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-dark " id="m_aside_header_menu_mobile_close_btn">
 								<i class="la la-close"></i>
@@ -350,11 +363,12 @@
 								<div class="m-portlet__body">
 															
 									<div class="form-group m-form__group row">
-										<!-- <label class="col-form-label col-lg-3 col-sm-12" style = "margin-left: 100px;">
+										<label class="col-form-label" style = "margin-left: 50px;">
 											Multi Select
-										</label> -->
-										<div class="col-lg-4 col-md-9 col-sm-12">
+										</label> 
+										<div class="col-lg-4 col-md-9 col-sm-12" style="margin-left: 20px;">
 											<select class="form-control m-select2 projectselect" id="m_select2_3" name="param" multiple="multiple" >
+
 												{% for option in projectlist %}
 									                  <option value="{{ option.projectName }}">{{ option.projectName }}</option>
 									                  {% endfor %}	
@@ -375,6 +389,8 @@
 								<div class="m-portlet__foot m-portlet__foot--fit">
 									<div class="m-form__actions m-form__actions">
 										<div class="row">
+										<div class="alert action  action1" ></div>
+
 											<div class=" ml-lg-auto">
 												<button type="submit" id ="reportsubmitbtn" class="btn btn-brand" style="background-color: #282a3c;">
 													Submit

@@ -1,5 +1,6 @@
 {% load static %}
-{% load custom_filter %}
+{% load custom_filter  %}
+
 <!DOCTYPE html>
 <html lang="en" >
 	<!-- begin::Head -->
@@ -72,7 +73,24 @@
 					<div class="m-stack m-stack--ver m-stack--desktop">
 						
 						<div class="m-stack__item m-stack__item--fluid m-header-head" style="background-color: #282a3c;" id="m_header_nav">
+
 							<!-- BEGIN: Horizontal Menu -->
+							<div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark "  >
+								<ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
+									<li class="m-menu__item  m-menu__item--submenu m-menu__item--rel"  data-menu-submenu-toggle="click" data-redirect="true" aria-haspopup="true">
+										<img src = "{% static 'logo.png'%}" width=40%>
+										<!-- <a  href="#" class="m-menu__link m-menu__toggle">
+											<i class="m-menu__link-icon flaticon-add"></i>
+											<span class="m-menu__link-text">
+												Actions
+											</span>
+											<i class="m-menu__hor-arrow la la-angle-down"></i>
+											<i class="m-menu__ver-arrow la la-angle-right"></i> -->
+										</a>
+									</li>
+								</ul>	
+							</div>
+										----------------------------------
 							<button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-dark " id="m_aside_header_menu_mobile_close_btn">
 								<i class="la la-close"></i>
 							</button>
@@ -119,7 +137,6 @@
 																		Section
 																	</span>
 																</li>
-																																<li class="m-nav__separator m-nav__separator--fit"></li>
 																<li class="m-nav__item">
 																	<a href="logout" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
 																		Logout
@@ -252,13 +269,27 @@
 															Report
 														</div>
 													</div>
+<<<<<<< HEAD
 													{% for i in data %};
+=======
+													
+												
+													{% for i in data %}
+>>>>>>> f68f8de9c4f534c17ce54636a470e349beb9be37
 														
 														<input type="text" value="{{todaydate}}" hidden  class="currentdate" name = "reportdate" ></input>
 														<div class="row tabledata">
 															<div class="cell" data-title="S.No">
+<<<<<<< HEAD
 																{% get_counting as count  %}
 																
+=======
+																{% if data.paginator.num_pages == 1 %}
+																{{ forloop.counter }}
+																
+																
+																{% endif %}
+>>>>>>> f68f8de9c4f534c17ce54636a470e349beb9be37
 															</div>
 															<div class="cell " data-title="Date" id ="datefield">
 																
@@ -283,6 +314,7 @@
 															
 													
 														</div>
+														
 													{% endfor %}
 													<br>
 													<div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
