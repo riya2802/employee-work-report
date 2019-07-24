@@ -4,22 +4,22 @@ var Select2 = function() {
     var demos = function() {
         // basic
         $('#m_select2_1, #m_select2_1_validate').select2({
-            placeholder: "Select a state"
+            placeholder: "Select Projects"
         });
 
         // nested
         $('#m_select2_2, #m_select2_2_validate').select2({
-            placeholder: "Select a state"
+            placeholder: "Select Projects"
         });
 
         // multi select
         $('#m_select2_3, #m_select2_3_validate').select2({
-            placeholder: "Select a state",
+            placeholder: "Select Projects",
         });
 
         // basic
         $('#m_select2_4').select2({
-            placeholder: "Select a state",
+            placeholder: "Select Projects",
             allowClear: true
         });
 
@@ -146,22 +146,22 @@ var Select2 = function() {
         $('#m_select2_modal').on('shown.bs.modal', function () {
             // basic
             $('#m_select2_1_modal').select2({
-                placeholder: "Select a state"
+                placeholder: "Select Projects"
             });
 
             // nested
             $('#m_select2_2_modal').select2({
-                placeholder: "Select a state"
+                placeholder: "Select Projects"
             });
 
             // multi select
             $('#m_select2_3_modal').select2({
-                placeholder: "Select a state",
+                placeholder: "Select Projects",
             });
 
             // basic
             $('#m_select2_4_modal').select2({
-                placeholder: "Select a state",
+                placeholder: "Select Projects",
                 allowClear: true
             }); 
         });

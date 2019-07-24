@@ -17,8 +17,10 @@ def get_nowtime():
 		res ="False"
 	return res
 
-@register.simple_tag
-def get_counting():
-	val=0
-	return val
+@register.filter
+def get_index(page_no):
+	pno = page_no -1
+	startindex = pno*5+1
+	return startindex 
+	
 
