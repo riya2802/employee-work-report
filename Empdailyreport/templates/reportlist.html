@@ -252,13 +252,13 @@
 															Report
 														</div>
 													</div>
-													{% for i in data %}
+													{% for i in data %};
 														
 														<input type="text" value="{{todaydate}}" hidden  class="currentdate" name = "reportdate" ></input>
 														<div class="row tabledata">
 															<div class="cell" data-title="S.No">
 																{% get_counting as count  %}
-																{{count+ int(1)}}
+																
 															</div>
 															<div class="cell " data-title="Date" id ="datefield">
 																
