@@ -88,7 +88,7 @@ var SnippetLogin = function() {
             btn.addClass('m-loader m-loader--right m-loader--light').attr('disabled', true);
 
             form.ajaxSubmit({
-                url : "http://127.0.0.1:8000/login",
+                url : "http://192.168.0.191:8000/login",
                 type: 'POST',
                 data: {'email': $('#email').val(),'password':$('#password').val()},
                 async: false,
@@ -101,7 +101,7 @@ var SnippetLogin = function() {
                             btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
                             showErrorMsg(form, 'success', res['msg']);
                         }, 2000);
-                        location.href=("/reportlist")
+                        location.href=("http://192.168.0.191:8000/reportlist")
                     }
                     else{
                         

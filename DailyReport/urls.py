@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from Empdailyreport import views
+from AssignEmail import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('Empdailyreport.urls'))
+    path('',include('Empdailyreport.urls')),
+	path('sendmail/',include('AssignEmail.urls')),
 
 ]

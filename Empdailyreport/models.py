@@ -19,3 +19,4 @@ class WorkReport(models.Model):
 	projectName = models.CharField(max_length=255)
 	projectDescription = models.CharField(max_length=1000)
 	reportid = models.ForeignKey(Report,models.CASCADE)
+

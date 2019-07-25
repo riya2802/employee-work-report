@@ -25,7 +25,7 @@ SECRET_KEY = '8*suk98rpf9qt2yjri#jme@kh!7s93@9ldtcyo#=)ic9q#+$mt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Empdailyreport',
-    'corsheaders'
+    'corsheaders',
+    'AssignEmail',
+    'django_inlinecss'
 ]
 
 MIDDLEWARE = [
@@ -139,3 +141,9 @@ CORS_ALLOW_METHODS = (
     'POST',
     'PUT',
 )
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'rawatriya7592@gmail.com'
+EMAIL_HOST_PASSWORD = 'mkshejdxzffjvulb'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL='rawatriya7592@gmail.com'

@@ -54,7 +54,7 @@ def logoutFun(request):
 	obj.logoutTime = datetime.datetime.now().time()
 	obj.save()
 	logout(request)
-	return redirect('/home')
+	return redirect('/')
 
 def reportList(request):
 	if not request.user.is_authenticated:
@@ -68,19 +68,21 @@ def reportList(request):
 	data_page = paginator.get_page(page)
 	return render(request,'reportlist.html', {'data':data_page,'name':user_obj.username,'email':user_obj.email,'todaydate':todaydate})
 
-
-
-
-
 @csrf_exempt
 def reportform(request):
 	if not request.user.is_authenticated:
 		return redirect('/home')
 	if request.method == "GET":
+		time = datetime.datetime.now().time()
 		projectlist= Projects.objects.all()
-
-		return render(request, 'report.html', {'projectlist':projectlist,})
-	
+		lunchtime1 =datetime.datetime.strptime('15:00', "%H:%M").time()
+		lunchtime2=datetime.datetime.strptime('16:00', "%H:%M").time()
+		ofctime1=datetime.datetime.strptime('18:30', "%H:%M").time()
+		ofctime2=datetime.datetime.strptime('23:59', "%H:%M").time()
+		if (time >=lunchtime1 and time<=lunchtime2)  or (time >=ofctime1  and time <=ofctime2):
+			return render(request, 'report.html', {'projectlist':projectlist,})
+		else :
+			return redirect('/reportlist')
 	user_obj =User.objects.filter(email=request.user.email).first()
 	report_obj = Report.objects.filter(userid=user_obj).first()
 	print('report_obj',report_obj,report_obj.date)

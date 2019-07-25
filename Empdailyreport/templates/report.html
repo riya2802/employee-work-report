@@ -19,7 +19,7 @@
 		<link href="{% static 'defaultassets/vendors/base/vendors.bundle.css'%}" rel="stylesheet" type="text/css" />
 		<link href="{% static 'defaultassets/demo/default/base/style.bundle.css' %}" rel="stylesheet" type="text/css" />
 		<link rel="shortcut icon" href="{% static 'defaultassets/demo/default/media/img/logo/favicon.ico'%}" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="{% static 'jquery.js' %}"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 		<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
 		<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
@@ -47,10 +47,11 @@
 			            var optionText = $(this).text();
 			            var data = e.params.data;
 			            var lastSelectedItem = e.params.data.id;
-			            
+			            var uniqueId = lastSelectedItem.split(" ")
+			            var id = uniqueId[1]
 			            console.log("lastSelectedItem",lastSelectedItem);
 
-			            displayrows(lastSelectedItem)
+			            displayrows(id,lastSelectedItem)
 			});
 			 	
 			$('.projectselect').on(' select2:unselect', function (e) {
@@ -61,26 +62,27 @@
 			            var optionText = $(this).text();
 			            var data = e.params.data;
 			            var lastSelectedItem = e.params.data.id;
-			            
+			            var uniqueId = lastSelectedItem.split(" ")
+			            var id = uniqueId[1]
 			            console.log("lastSelectedItem",lastSelectedItem);
 
-			            deleterows(lastSelectedItem)
+			            deleterows(id)
 			});
 		});
 	
-			function displayrows(lastSelectedItem){
+			function displayrows(lastSelectedItem,name){
 			//console.log('length',projects.length)
-
-			 	var input='<br><div class="div'+lastSelectedItem+' col-sm-4"><div class="form-control" style=" background-color:#282a3c; border:1px solid white; color:white; "><p class="selected_project" >'+lastSelectedItem+'</p></div><input type="text" value=" '+lastSelectedItem+'" hidden class="pname" name = "selected_project[]" ></input><textarea class="form-control project_description " style="width:300px;" name="project_description[]" rows="5" cols="10"> </textarea></div><br>';
+			 	var input='<br><div class="project 1" id ="'+lastSelectedItem+'" col-sm-4" style="margin-bottom:20px; margin-left:20px;"><div class="form-control" style=" background-color:#282a3c; border:1px solid white; color:white; "><p class="selected_project" >'+name+'</p></div><input type="text" value=" '+name+'" hidden class="pname" name = "selected_project[]" ></input><textarea class="form-control project_description " style="width:300px;" name="project_description[]" rows="5" cols="10"> </textarea></div>';
 			 	$('.dynamic').append(input);
 			 	
 			}
 			function deleterows(lastSelectedItem){
+				var a = "."+lastSelectedItem
+				// alert(a);
+				$("#"+lastSelectedItem).remove(); 
 				
-				$('.div'+lastSelectedItem).remove(); 
 				// $('.dynamic').closest(".div'+lastSelectedItem").remove();
 			 	}
-
 		// 	$('.projectselect').change(function(){
 		// 		console.log("hii");
 		//         var selections = [];

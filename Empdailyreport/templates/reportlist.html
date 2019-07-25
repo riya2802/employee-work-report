@@ -30,7 +30,8 @@
 <!--===============================================================================================-->
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+  <script src="{% static 'jquery.js' %}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
@@ -269,27 +270,18 @@
 															Report
 														</div>
 													</div>
-<<<<<<< HEAD
-													{% for i in data %};
-=======
 													
 												
 													{% for i in data %}
->>>>>>> f68f8de9c4f534c17ce54636a470e349beb9be37
 														
 														<input type="text" value="{{todaydate}}" hidden  class="currentdate" name = "reportdate" ></input>
 														<div class="row tabledata">
 															<div class="cell" data-title="S.No">
-<<<<<<< HEAD
-																{% get_counting as count  %}
-																
-=======
 																{% if data.paginator.num_pages == 1 %}
 																{{ forloop.counter }}
 																
 																
 																{% endif %}
->>>>>>> f68f8de9c4f534c17ce54636a470e349beb9be37
 															</div>
 															<div class="cell " data-title="Date" id ="datefield">
 																
@@ -305,7 +297,7 @@
 																{% else %}
 																		{% get_nowtime as currenttime %}
 																		{% if currenttime == "True"   %}
-																<a href="/reportform"><button type="button"  class="btn btn-primary btn-sm workreport" key ="">Work Report</button></a>
+																<a href="http://192.168.0.191:8000/reportform"><button type="button"  class="btn btn-primary btn-sm workreport" key ="">Work Report</button></a>
 																{% else %}
 																<button  type="button" class="btn btn-primary btn-sm workreport" key ="">Work Report</button>
 																{% endif %}
@@ -336,7 +328,7 @@
 												    </span>
 													</div>
 													<script>
-							            						checkButton();
+							            						// checkButton();
 							       							</script>
 													
 
