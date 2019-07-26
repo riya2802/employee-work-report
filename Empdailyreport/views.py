@@ -7,7 +7,7 @@ import datetime
 from .models import Report, Projects, WorkReport,UrlTime
 from .validations import is_valid_email
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import render 
 
 
 def loginFun(request):

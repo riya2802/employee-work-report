@@ -46,7 +46,7 @@ $(document).ready(function(){
     	}
     }
     $.ajax({
-        url : "http://127.0.0.1:8000/reportform",
+        url : "http://192.168.0.191:8000/reportform",
         type: 'POST',
         data: {'projectname':projectname,'project_description':project_description},
         async: false,
@@ -56,7 +56,7 @@ $(document).ready(function(){
             if(res['status']==200){
 	        	console.log("Success")
 	        	console.log(res)
-	            location.href=("http://127.0.0.1:8000/logout") 
+	            location.href=("http://192.168.0.191:8000/logout") 
 	        }else{
                 console.log('we are in a else condition');
                 $('.action').show()

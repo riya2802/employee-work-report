@@ -28,18 +28,18 @@
                 </tr>
                 <!--header -->
                 <tr>
-                    <td align="center" bgcolor="#0d469f" style="background-image: url('/static/logo.png');">
+                    <td align="center" bgcolor="#282a3c" style="background-image: url('/static/logo.png');">
                         <!-- padding -->
                         <div style="height: 15px; line-height: 15px; font-size: 10px;"> </div>
 
                         <table width="90%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td align="center">
-                                    <!-- Item -->
+                                <!-- <td align="center">
+                                    
                                     <div class="mob_center_bl" style="display: inline-block; width: 115px;">
                                         <table style="text-align: center;" class="mob_center" width="115" border="0" cellspacing="0" cellpadding="0" align="center" style="border-collapse: collapse;">
                                             <tr><td align="center" valign="middle">
-                                                <!-- padding -->
+                                               
                                                 <div style="height: 20px; line-height: 20px; font-size: 10px;"> </div>
                                                 <table width="115" border="0" cellspacing="0" cellpadding="0" >
                                                     <tr><td align="center" valign="top" class="mob_center">
@@ -51,8 +51,8 @@
                                             </td></tr>
                                         </table>
                                     </div>
-                                    <!-- Item END-->
-                                </td>
+                                    
+                                </td> -->
                             </tr>
                         </table>
                         <!-- padding -->
@@ -68,6 +68,13 @@
                             <tr>
                                 <td align="left">
                                     <!-- padding -->
+                                    <table align="center"  width="115" border="0" cellspacing="0" cellpadding="0" style="margin-top:55px;">
+                                                    <tr><td align="center" valign="top" class="mob_center">
+                                                        <a href="https://valuebit.com/" target="_blank" style="color: #596167; font-family: Arial, Helvetica, sans-serif; font-size: 13px;">
+                                                        <font face="Arial, Helvetica, sans-seri; font-size: 13px;" size="3" color="#596167">
+                                                        <img src="{% static 'logo.png' %}" width="115" height="19" alt="" border="0" style="display: block;" /></font></a>
+                                                    </td></tr>
+                                                </table>
                                     <div style="height: 30px; line-height: 30px; font-size: 10px;"> </div>
                                     <div style="line-height: 44px;">
                                         <font face="Arial, Helvetica, sans-serif" size="5" color="#57697e" style="font-size: 34px;">
@@ -84,7 +91,7 @@
                                     <div style="line-height: 24px;">
                                         <font face="Arial, Helvetica, sans-serif" size="4" color="#57697e" style="font-size: 15px;">
                                         <span style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #000;">
-                                            If you want to change your password then click the link below here.
+                                            You have requested password reset for your official Email. Please Click the below button to reset your password.
                                         </span></font>
                                     </div>
                                     <!-- padding -->
@@ -94,14 +101,14 @@
                             <tr>
                                 <td align="left">
                                     <div style="line-height: 24px;">
-                                         <a style="display:inline-block;color:#fff;text-decoration:none;text-transform:uppercase;font-weight:bold;background:linear-gradient(90deg, #17e0ea, #6078ea);padding:12px 26px 12px 26px;border-radius:8px" href="http://{{ href}}">
+                                         <a style="display:inline-block;color:#fff;text-decoration:none;text-transform:uppercase;font-weight:bold;background:linear-gradient(90deg, #17e0ea, #6078ea);padding:12px 26px 12px 26px;border-radius:8px" href="{{href}}/{{token}}">
                                             <span style="font-size:13px">
-                                                <span style="font-family:lato,helvetica neue,helvetica,arial,sans-serif;letter-spacing:0.1em">Verify Email</span>
+                                                <span style="font-family:lato,helvetica neue,helvetica,arial,sans-serif;letter-spacing:0.1em">Reset Password</span>
 
                                             </span>&nbsp;
                                         </a>
                                     </div>
-                                    <!-- padding -->
+                                   
                                     <div style="height: 10px; line-height: 10px; font-size: 10px;"> </div>
                                 </td>
                             </tr>
@@ -110,8 +117,10 @@
                                     <div style="line-height: 24px;">
                                         <font face="Arial, Helvetica, sans-serif" size="4" color="#57697e" style="font-size: 15px;">
                                         <span style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #000;">
-                                            This link will expire in 24 hours. <br>
-                                            Unable to click on the above button? Click here <br><a href="http://{{ href}}" target="_blank" data-saferedirecturl="">{{base_url}}/confirmation/?confirmation_token={{confirmation_token}}</a> 
+                                            <br>If you did not perform this action, you may ignore this email. Your password will not be reset without your confirmation.. <br><br>
+
+                                            Regards,<br>
+                                            The Flitsweb.com <br><br>
                                         </span></font>
                                     </div>
                                 </td>
@@ -122,19 +131,10 @@
                 <!--content 1 END-->
                 <!--footer -->
                 <tr>
-                    <td class="iage_footer" align="center" bgcolor="#ffffff">
-                        
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                            <tr><td align="center">
-                                <font face="Arial, Helvetica, sans-serif" size="3" color="#96a5b5" style="font-size: 13px;">
-                                <span style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #96a5b5;">
-                                    2018 © ValueBit. ALL Rights Reserved.
-                                </span></font>              
-                            </td></tr>          
-                        </table>
-                        
+                    <td class="iage_footer" align="center" bgcolor="#282a3c" style="height:45px;" >
+
                         <!-- padding -->
-                        <div style="height: 30px; line-height: 30px; font-size: 10px;"> </div>  
+                        <div style="height: 45px; line-height: 45px; font-size: 10px;"> </div>  
                     </td>
                 </tr>
                 <!--footer END-->

@@ -1,3 +1,4 @@
+alert("aaaaaaa")
 //== Class definition
 
 var FormControls = function () {
