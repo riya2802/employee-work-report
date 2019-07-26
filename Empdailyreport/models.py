@@ -20,3 +20,9 @@ class WorkReport(models.Model):
 	projectDescription = models.CharField(max_length=1000)
 	reportid = models.ForeignKey(Report,models.CASCADE)
 
+class UrlTime(models.Model):
+	lunchTimeStart = models.TimeField(default=datetime.time(0,0))
+	lunchTimeEnd =  models.TimeField(default=datetime.time(0,0))
+	eveningstart =models.TimeField(default=datetime.time(0,0))
+	eveningend=models.TimeField(default=datetime.time(0,0))
+

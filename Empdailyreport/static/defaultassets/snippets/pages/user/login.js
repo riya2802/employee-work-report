@@ -1,3 +1,31 @@
+function getCookie(name) {
+   var cookieValue = null;
+   if (document.cookie && document.cookie !== '') {
+       var cookies = document.cookie.split(';');
+       for (var i = 0; i < cookies.length; i++) {
+           var cookie = cookies[i].trim();
+           // Does this cookie string begin with the name we want?
+           if (cookie.substring(0, name.length + 1) === (name + '=')) {
+               cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+               break;
+           }
+       }
+   }
+   return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+console.log(csrftoken,"this is the csrftoken")
+function csrfSafeMethod(method) {
+   // these HTTP methods do not require CSRF protection
+   return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+   beforeSend: function(xhr, settings) {
+       if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+           xhr.setRequestHeader("X-CSRFToken", csrftoken);
+       }
+   }
+});
 //== Class Definition
 var SnippetLogin = function() {
 
@@ -88,7 +116,7 @@ var SnippetLogin = function() {
             btn.addClass('m-loader m-loader--right m-loader--light').attr('disabled', true);
 
             form.ajaxSubmit({
-                url : "http://192.168.0.191:8000/login",
+                url : "http://127.0.0.1:8000/login",
                 type: 'POST',
                 data: {'email': $('#email').val(),'password':$('#password').val()},
                 async: false,
@@ -101,7 +129,7 @@ var SnippetLogin = function() {
                             btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
                             showErrorMsg(form, 'success', res['msg']);
                         }, 2000);
-                        location.href=("http://192.168.0.191:8000/reportlist")
+                        location.href=("http://127.0.0.1:8000/reportlist")
                     }
                     else{
                         

@@ -4,13 +4,12 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 import datetime
-from .models import Report, Projects, WorkReport
+from .models import Report, Projects, WorkReport,UrlTime
 from .validations import is_valid_email
 from django.core.paginator import Paginator
 from django.shortcuts import render
 
 
-@csrf_exempt
 def loginFun(request):
 	print(request.method)
 	if request.method == "POST":
@@ -29,22 +28,15 @@ def loginFun(request):
 		if not user:
 			return JsonResponse({'msg':'Password Not Match', 'status':400}) 
 		login(request,user)
-		print('date=',datetime.datetime.now().date())
 		checkReport = Report.objects.filter(userid =user_obj ,date=datetime.datetime.now().date())
 		print('checkReport',checkReport)
 		if not checkReport:
 			reportObj = Report.objects.create(userid=user_obj,date=datetime.datetime.now().date())
 		return JsonResponse({'msg':'Success', 'status':200}) 
 
-
-
-@csrf_exempt
 def home(request):
 	return render(request,'login.html')
 	
-
-
-@csrf_exempt
 def logoutFun(request):
 	print(request.user.username)
 	if not request.user.is_authenticated:
@@ -68,18 +60,20 @@ def reportList(request):
 	data_page = paginator.get_page(page)
 	return render(request,'reportlist.html', {'data':data_page,'name':user_obj.username,'email':user_obj.email,'todaydate':todaydate})
 
-@csrf_exempt
+
 def reportform(request):
 	if not request.user.is_authenticated:
 		return redirect('/home')
 	if request.method == "GET":
 		time = datetime.datetime.now().time()
 		projectlist= Projects.objects.all()
-		lunchtime1 =datetime.datetime.strptime('15:00', "%H:%M").time()
-		lunchtime2=datetime.datetime.strptime('16:00', "%H:%M").time()
-		ofctime1=datetime.datetime.strptime('18:30', "%H:%M").time()
-		ofctime2=datetime.datetime.strptime('23:59', "%H:%M").time()
-		if (time >=lunchtime1 and time<=lunchtime2)  or (time >=ofctime1  and time <=ofctime2):
+		dtime = UrlTime.objects.get()
+		print('dtime',dtime.lunchTimeStart)
+		# lunchtime1 =datetime.datetime.strptime('15:00', "%H:%M").time()
+		# lunchtime2=datetime.datetime.strptime('16:00', "%H:%M").time()
+		# ofctime1=datetime.datetime.strptime('18:30', "%H:%M").time()
+		# ofctime2=datetime.datetime.strptime('23:59', "%H:%M").time()
+		if (time >=dtime.lunchTimeStart and time<=dtime.lunchTimeEnd)  or (time >=dtime.eveningstart  and time <=dtime.eveningend):
 			return render(request, 'report.html', {'projectlist':projectlist,})
 		else :
 			return redirect('/reportlist')
