@@ -91,7 +91,6 @@ var FormControls = function () {
             submitHandler: function (form) {
                 //form[0].submit(); // submit the form
             }
-            
         });       
     }
 
