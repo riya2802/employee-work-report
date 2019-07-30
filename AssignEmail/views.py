@@ -48,16 +48,12 @@ def send_email(request):
 
 @csrf_exempt
 def resetPassword(request):
-
-	token = request.GET.get('token')
-	tokenmatch = ResetPasswordToken.objects.filter(token=token).first()
-
-	if tokenmatch is None : 
-		return render(request,'passwordchange.html')
-
-
+	print("request")
 	if request.method == "GET":
-		if tokenmatch is None :
+		token = request.GET.get('token')
+		tokenmatch = ResetPasswordToken.objects.filter(token=token).first()
+		print("token",token)
+		if tokenmatch is None : 
 			return render(request,'passwordchange.html')
 		else:
 			return render(request,'passwordchange.html')
@@ -65,24 +61,20 @@ def resetPassword(request):
 	if request.method == "POST":	
 		newpassword = request.POST.get('password')
 		conpassword = request.POST.get('conpassword')
-
-		if not conpassword == newpassword :
+		token = request.POST.get('token')
+		print('token--->',token)
+		tokenmatch = ResetPasswordToken.objects.filter(token=token).first()
+		if tokenmatch is None : 
+			return JsonResponse({'msg':'Invalid Token','status':400})
+		if conpassword == "" or  newpassword=="" or  not conpassword == newpassword :
 			return JsonResponse({'msg':'password not match','status':400})
-			
+		
 		user= User.objects.get(id =tokenmatch.userid_id)
 		user.password = make_password(newpassword)
 		user.save()
 		tokenmatch.delete()
 		return JsonResponse({'msg':'Success','status':200})
-	
 
-
-def lastWorkReport(request):
-	lastReports = Report.objects.filter(status = 'Success')
-	SomeModel_json = serializers.serialize("json",lastReports)
-	# data = {"SomeModel_json": SomeModel_json}
-	# return HttpResponse(SomeModel_json,content_type="application/json")
-	return JsonResponse(SomeModel_json,safe=False)
 
 
 

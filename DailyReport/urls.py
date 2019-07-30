@@ -22,6 +22,6 @@ from AssignEmail import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('Empdailyreport.urls')),
-	path('sendmail/',include('AssignEmail.urls')),
+	path('sendmail/',include('AssignEmail.urls'))
 
 ]
