@@ -31,12 +31,6 @@ function getQueryStringValue (key) {
 } 
 //== Class definition
 $(document).ready(function(){
-
-    //$('#resetbtn').click(function(e) {
-    //       e.preventDefault();
-    //       submitform();
-    //});
-    //alert(getQueryStringValue("token"))
     $('#token').val(getQueryStringValue("token"));
     });
 
