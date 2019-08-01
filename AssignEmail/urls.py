@@ -5,4 +5,5 @@ urlpatterns = [
 	path('email',views.send_email),
 	path('resetpassword',views.resetPassword),
 	path('emailtemplate',views.emailtemplate),	
+	path('data',views.data),
 	]

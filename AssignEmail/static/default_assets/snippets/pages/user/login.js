@@ -27,6 +27,12 @@ $.ajaxSetup({
    }
 });
 //== Class Definition
+function getQueryStringValue (key) {  
+    return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+}
+$(document).ready(function(){
+    $('#token').val(getQueryStringValue("token"));
+    });
 var SnippetLogin = function() {
 
     var login = $('#m_login');
@@ -99,12 +105,20 @@ var SnippetLogin = function() {
 
             form.validate({
                 rules: {
-                    email: {
-                        required: true,
-                        email: true
-                    },
                     password: {
-                        required: true
+                        required: true,
+                        rangelength:[8,25],
+                    },
+                    confirmpassword: {
+                        required: true,
+                         equalTo: "#password",
+                    },
+                   
+                    messages:{
+                        confirmpassword:{
+                            //required:"This field is required",
+                            equalTo:"Please enter the same value again and "
+                        }
                     }
                 }
             });
@@ -116,28 +130,23 @@ var SnippetLogin = function() {
             btn.addClass('m-loader m-loader--right m-loader--light').attr('disabled', true);
 
             form.ajaxSubmit({
-                url : "http://192.168.0.191:8000/login",
+                url : "http://192.168.0.191:8000/sendmail/resetpassword",
                 type: 'POST',
-                data: {'email': $('#email').val(),'password':$('#password').val()},
+                data: {'token':$('#token').val(),'password': $('#password').val(),'confirmpassword':$('#confirmpassword').val()},
                 async: false,
                 success:function(response)
                 {
                     res=JSON.parse(JSON.stringify(response))
-                    
                     if(res['status']==200){
-                        setTimeout(function() {
-                            btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
-                            showErrorMsg(form, 'success', res['msg']);
-                        }, 2000);
-                        location.href=("http://192.168.0.191:8000/reportlist")
+                        location.href=("http://192.168.0.191:8000/")
                     }
                     else{
-                        
-                    	setTimeout(function() {
+                        setTimeout(function() {
                             btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
                             showErrorMsg(form, 'danger', res['msg']);
                         }, 2000);
                     }
+                    
                 }
             });
         });

@@ -26,13 +26,9 @@ $.ajaxSetup({
        }
    }
 });
-function getQueryStringValue (key) {  
-    return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
-} 
+
 //== Class definition
-$(document).ready(function(){
-    $('#token').val(getQueryStringValue("token"));
-    });
+
 
 var FormControls = function () {
     //== Private functions
@@ -41,16 +37,13 @@ var FormControls = function () {
         $( "#m_form_1" ).validate({
             // define validation rules
             rules: {
-                password: {
+                oldpassword: {
                     required: true,
-                    
                 },
-                conpassword: {
-                    required: true 
+                newpassword: {
+                    required: true, 
                 },
-                conpassword: {
-                    equalTo: "#password"
-                },
+               
                 
             },
             
@@ -89,9 +82,9 @@ function preventfunction(){
 
                // $('#resetbtn').on('submit', function(e) {
                 //e.preventDefault();
-                url : "http://192.168.0.191:8000/sendmail/resetpassword",
+                url : "http://192.168.0.191:8000/changepassword",
                 type: 'POST',
-                data: {'token':$('#token').val(),'password': $('#password').val(),'conpassword':$('#conpassword').val()},
+                data: {'newpassword': $('#newpassword').val(),'oldpassword':$('#oldpassword').val()},
                 async: false,
                 success:function(response)
                 {

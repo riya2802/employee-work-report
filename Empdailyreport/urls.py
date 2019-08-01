@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout',views.logoutFun),
     path('reportlist',views.reportList),
     path('reportform', views.reportform),
+    path('template',views.template)
     
    
    

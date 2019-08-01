@@ -15,6 +15,9 @@ from .models import ResetPasswordToken
 from django.contrib.auth.hashers import make_password
 from Empdailyreport.models import Report
 from django.core import serializers
+import json
+from django.apps import apps
+
 
 
 @csrf_exempt
@@ -52,11 +55,11 @@ def resetPassword(request):
 		if tokenmatch is None : 
 			return render(request,'error-6.html')
 		else:
-			return render(request,'passwordchange.html')
+			return render(request,'resetPassword.html')
 
 	if request.method == "POST":	
 		newpassword = request.POST.get('password')
-		conpassword = request.POST.get('conpassword')
+		conpassword = request.POST.get('confirmpassword')
 		token = request.POST.get('token')
 		tokenmatch = ResetPasswordToken.objects.filter(token=token).first()
 		if tokenmatch is None : 
@@ -72,7 +75,53 @@ def resetPassword(request):
 
 @csrf_exempt
 def emailtemplate(request):
-	return render(request,'email_send.html')
+	return render(request,'passwordchange.html')
+
+
+
+def data(request):
+	def sendResponse(valid_model_name,offset = None,limit = None):
+		if offset is None and limit is not None:# when page ==1
+			user_data = valid_model_name.objects.all()[:limit]
+		elif offset is not  None and limit is not None: ## when page no is grater then 1
+			user_data = model.objects.all()[offset:limit]
+		else :
+			user_data =  valid_model_name.objects.all()
+		json_res=serializers.serialize("json",user_data)
+		res =json.loads(json_res)
+		return JsonResponse({'res':res})
+	
+	model_name = request.GET.get('model',None)
+	page = request.GET.get('page',None)
+	per_page = request.GET.get('per_page',None)
+	if page is not None and not page.isnumeric() or per_page is not None and not per_page.isnumeric():
+		return JsonResponse({'msg':"invalid credentials "})
+	if  model_name is not None:
+		try:
+			model = apps.get_model('Empdailyreport', model_name)
+		except:
+			return JsonResponse({'msg':"invalid model name"})
+	if model_name is None and  page is None and per_page is None :
+		result =sendResponse(User)
+	if model_name is not None  and page is None and per_page is None : 
+		result =sendResponse(model)
+	if model_name is not None and  page is not None and per_page is None:
+		result =sendResponse(model)
+	if model_name is not None and page is not None and per_page is not None :
+		if page == '1':
+			result =sendResponse(model,limit=int(per_page))
+		else :
+			offset = (int(page)-1)*int(per_page)
+			result =sendResponse(model,offset =offset,limit=offset+int(per_page))
+	return result
+
+
+
+	
+
+
+
+
 
 
 

@@ -8,6 +8,7 @@ from .models import Report, Projects, WorkReport,UrlTime
 from .validations import is_valid_email
 from django.core.paginator import Paginator
 from django.shortcuts import render 
+from django.contrib.auth.decorators import login_required
 
 
 def loginFun(request):
@@ -99,3 +100,47 @@ def reportform(request):
 	print('insert_list',insert_list)
 	obj = Report.objects.filter(userid=user_obj,date =datetime.datetime.now().date()).update(status='Success')
 	return JsonResponse({'msg':'Success','status':200})
+
+
+@csrf_exempt
+def template(request):
+	return render(request,'passwordchange.html')
+
+
+
+@login_required
+def changePassword(request):
+    old_pass=request.POST.get('oldpassword')
+    new_pass = request.POST.get('newpassword')
+    if old_pass is None or old_pass == "" or new_pass is None or new_pass == "":
+        return Response({'message':' Required field Empty','status'=400})
+    user_obj = User.objects.filter(username= request.user).first()
+    passwordMatch= user_obj.check_password(old_pass)
+    print(passwordMatch)
+    if passwordMatch is None: 
+        return Response({'message':'Password not match','status'=400})
+    # passwordvalidation= myrsource.validate_password(new_pass)
+    # if passwordvalidation is not True :
+    #     return Response({'message':' Enter Invalid password'},status= HTTP_400_BAD_REQUEST)
+    updatePassword = make_password(new_pass)
+    user_obj.password = updatePassword
+    user_obj.save()
+    return Response({'message':'password updated successfully '})
+
+
+def forgotPasssword(request):
+	email = request.POST.get('email', None)
+	password =request.POST.get('password', None)
+    if email is None or email == '' and  password is None or password == '' :
+        return Response({'message': 'Required field Empty','status'=400})
+    user= User.objects.filter(email=email).first()
+    if user is None :
+        return Response({'message': 'Email is not register', "status"=400})
+    updatePassword = make_password(password)
+    user_obj.password = updatePassword
+    user.save()
+    return Response({'message':'password updated successfully '})
+
+
+
+      
