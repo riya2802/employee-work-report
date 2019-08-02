@@ -43,6 +43,12 @@ var FormControls = function () {
                     required: true,
                     rangelength:[8,25], 
                 },
+                messages:{
+                        newpassword:{
+                            //required:"This field is required",
+                            rangelength:"password should be more then 8 charecters "
+                        }
+                    }
                 
             },
             

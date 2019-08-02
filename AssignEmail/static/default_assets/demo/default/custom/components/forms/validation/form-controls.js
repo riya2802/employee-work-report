@@ -35,6 +35,7 @@ var FormControls = function () {
     
     var demo1 = function () {
         $( "#m_form_1" ).validate({
+
             // define validation rules
             rules: {
                 oldpassword: {

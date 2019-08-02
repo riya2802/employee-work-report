@@ -30,9 +30,9 @@ def send_email(request):
 		email=str(stremail)
 		hashtoken = hashlib.sha256(email.encode('utf-8')).hexdigest() ##generate hash using sha256 with email 
 		user_obj = User.objects.filter(email = email).first()
-		# if user_obj:
-		# 	return JsonResponse({'msg':'Already Exist','status':400})
-		
+		if user_obj:
+			return JsonResponse({'msg':'Already Exist','status':400})
+		User.object.create(email=stremail)
 		subject='change your password'
 		token=hashtoken
 		html_message = render_to_string('email_pass.html',{'token':token,'href':' http://192.168.0.191:8000/sendmail/resetpassword'})
@@ -43,7 +43,7 @@ def send_email(request):
 			msg.send()
 			ResetPasswordToken.objects.create(userid=user_obj, token=token)
 		except:
-			return JsonResponse({'msg':'Network Issue','status':400})
+			return render(request,'error-6.html')
 		return JsonResponse({'msg':'Success','status':200})
 
 @csrf_exempt
@@ -75,7 +75,7 @@ def resetPassword(request):
 
 @csrf_exempt
 def emailtemplate(request):
-	return render(request,'passwordchange.html')
+	return render(request,'index.html')
 
 
 
@@ -117,9 +117,22 @@ def data(request):
 
 
 
-	
+@csrf_exempt
+def index(request): 
+	return render(request,'index.html')
 
-
+@csrf_exempt
+## check email exist or not 
+def isemailexist(request):
+	strdata= request.POST.get('request_data')
+	emailcheck = is_valid_email(strdata)
+	if not emailcheck:
+		return JsonResponse({'data':'Invalid Email','status':400})
+	user_obj = User.objects.filter(email = strdata).first()
+	# checkUsername= validation_function.is_valid_username(strdata)
+	if user_obj:
+		return JsonResponse({'data':'Already Exist','status':400})
+	return JsonResponse({'data':'Available','status':200})
 
 
 

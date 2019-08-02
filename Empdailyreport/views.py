@@ -104,42 +104,60 @@ def reportform(request):
 
 @csrf_exempt
 def template(request):
-	return render(request,'passwordchange.html')
+	return render(request,'reportlist.html')
 
 
 
 @login_required
 def changePassword(request):
-    old_pass=request.POST.get('oldpassword')
-    new_pass = request.POST.get('newpassword')
-    if old_pass is None or old_pass == "" or new_pass is None or new_pass == "":
-        return Response({'message':' Required field Empty','status'=400})
-    user_obj = User.objects.filter(username= request.user).first()
-    passwordMatch= user_obj.check_password(old_pass)
-    print(passwordMatch)
-    if passwordMatch is None: 
-        return Response({'message':'Password not match','status'=400})
-    # passwordvalidation= myrsource.validate_password(new_pass)
-    # if passwordvalidation is not True :
-    #     return Response({'message':' Enter Invalid password'},status= HTTP_400_BAD_REQUEST)
-    updatePassword = make_password(new_pass)
-    user_obj.password = updatePassword
-    user_obj.save()
-    return Response({'message':'password updated successfully '})
+	if request.method =="POST":
+	    old_pass=request.POST.get('oldpassword')
+	    new_pass = request.POST.get('newpassword')
+	    if old_pass is None or old_pass == "" or new_pass is None or new_pass == "":
+	        return Response({'message':' Required field Empty','status':400})
+	    user_obj = User.objects.filter(username= request.user).first()
+	    passwordMatch= user_obj.check_password(old_pass)
+	    print(passwordMatch)
+	    if passwordMatch is None: 
+	        return Response({'message':'Password not match','status':400})
+	    # passwordvalidation= myrsource.validate_password(new_pass)
+	    # if passwordvalidation is not True :
+	    #     return Response({'message':' Enter Invalid password'},status= HTTP_400_BAD_REQUEST)
+	    updatePassword = make_password(new_pass)
+	    user_obj.password = updatePassword
+	    user_obj.save()
+	    return Response({'message':'password updated successfully '})
+	return render(request,'passwordchange.html')
+
 
 
 def forgotPasssword(request):
-	email = request.POST.get('email', None)
-	password =request.POST.get('password', None)
-    if email is None or email == '' and  password is None or password == '' :
-        return Response({'message': 'Required field Empty','status'=400})
-    user= User.objects.filter(email=email).first()
-    if user is None :
-        return Response({'message': 'Email is not register', "status"=400})
-    updatePassword = make_password(password)
-    user_obj.password = updatePassword
-    user.save()
-    return Response({'message':'password updated successfully '})
+	if request.method == "POST":
+		email = request.POST.get('email', None)
+		password =request.POST.get('password', None)
+		if email is None or email == '' and  password is None or password == '' :
+			return Response({'message': 'Required field Empty','status':400})
+		user= User.objects.filter(email=email).first()
+		if user is None :
+			return Response({'message': 'Email is not register', "status":400})
+		updatePassword = make_password(password)
+		user_obj.password = updatePassword
+		user.save()
+		return Response({'message':'password updated successfully '})
+
+
+def successreport(request):
+	if not request.user.is_authenticated:
+		return redirect('/')
+	user_obj =User.objects.filter(email=request.user.email).first()
+	obj = Report.objects.filter(userid=user_obj,status="Success" ).order_by('-date')
+	todaydate = datetime.datetime.now().date()
+	paginator = Paginator(obj,5) # Show 25 contacts per page
+	page = request.GET.get('page')
+	data_page = paginator.get_page(page)
+	return render(request,'successReport.html', {'data':data_page,'name':user_obj.username,'email':user_obj.email,'todaydate':todaydate})
+
+	
 
 
 
