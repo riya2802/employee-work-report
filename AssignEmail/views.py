@@ -17,22 +17,24 @@ from Empdailyreport.models import Report
 from django.core import serializers
 import json
 from django.apps import apps
+from django.utils.crypto import get_random_string
 
 
-
+## get email save it into User model and send mail to that email.
 @csrf_exempt
 # @login_required
 def send_email(request):
 	if request.method == "POST":
 		stremail= request.POST.get('email')
-		if not is_valid_email(stremail):
+		if not is_valid_email(str(stremail)):
 			return JsonResponse({'msg':'Invalid Email','status':400})
 		email=str(stremail)
 		hashtoken = hashlib.sha256(email.encode('utf-8')).hexdigest() ##generate hash using sha256 with email 
-		user_obj = User.objects.filter(email = email).first()
+		username = get_random_string(length=10, allowed_chars=stremail)## generate username using this method with email
+		print(username,'username') 
+		user_obj = User.objects.filter(email = stremail,username=username).first()
 		if user_obj:
 			return JsonResponse({'msg':'Already Exist','status':400})
-		User.object.create(email=stremail)
 		subject='change your password'
 		token=hashtoken
 		html_message = render_to_string('email_pass.html',{'token':token,'href':' http://192.168.0.191:8000/sendmail/resetpassword'})
@@ -41,9 +43,10 @@ def send_email(request):
 			msg = EmailMessage(subject,html_message, DEFAULT_FROM_EMAIL,[email])
 			msg.content_subtype = "html"
 			msg.send()
-			ResetPasswordToken.objects.create(userid=user_obj, token=token)
 		except:
-			return render(request,'error-6.html')
+			return JsonResponse({'msg':'Network Issue ','status':400})
+		user_id=User.objects.create(email=email, username=username)
+		ResetPasswordToken.objects.create(userid=user_id, token=token)
 		return JsonResponse({'msg':'Success','status':200})
 
 @csrf_exempt
